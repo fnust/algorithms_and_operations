@@ -85,9 +85,9 @@ if __name__ == '__main__':
     sheet['I1'] = 'boyer_moore_horspool'
     sheet['J1'] = 'knuth_morris_pratt'
     for i in range(4):
-        with open(f'good_t_{i + 1}.txt', 'r', encoding='utf8') as f_text:
+        with open(f'benchmarks/good_t_{i + 1}.txt', 'r', encoding='utf8') as f_text:
             t = f_text.read()
-        with open(f'good_w_{i + 1}.txt', 'r', encoding='utf8') as w_text:
+        with open(f'benchmarks/good_w_{i + 1}.txt', 'r', encoding='utf8') as w_text:
             w = w_text.read()
         print(f'----- case: good {i + 1} -----')
         print('len text =', len(t))
@@ -130,9 +130,9 @@ if __name__ == '__main__':
         sheet[f'J{i + 2}'] = end_time - start_time
 
     for i in range(4):
-        with open(f'bad_t_{i + 1}.txt', 'r', encoding='utf8') as f_text:
+        with open(f'benchmarks/bad_t_{i + 1}.txt', 'r', encoding='utf8') as f_text:
             t = f_text.read()
-        with open(f'bad_w_{i + 1}.txt', 'r', encoding='utf8') as w_text:
+        with open(f'benchmarks/bad_w_{i + 1}.txt', 'r', encoding='utf8') as w_text:
             w = w_text.read()
         print(f'----- case: bad {i + 1} -----')
         print('len text =', len(t))
