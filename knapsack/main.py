@@ -3,6 +3,7 @@ import openpyxl as openpyxl
 from ptas import ptas
 from dynamic_programming import dynamic_programming
 from two_approx import two_approx
+from branch_and_bound import branch_and_bound
 
 
 def time_and_operations(name: str, algorithm, w: int, costs: list, weights: list,
@@ -35,7 +36,7 @@ def print_names(sheet: openpyxl.workbook.workbook.Worksheet) -> None:
     for i in range(5):
         sheet[f'{chr(66 + i * 5)}1'] = 'two approx'
         sheet[f'{chr(67 + i * 5)}1'] = 'dynamic programming'
-        sheet[f'{chr(68 + i * 5)}1'] = '?'
+        sheet[f'{chr(68 + i * 5)}1'] = 'branch and bound'
         sheet[f'{chr(69 + i * 5)}1'] = 'PTAS'
 
 
@@ -67,7 +68,7 @@ if __name__ == '__main__':
         sheet[f'A{i + 1}'] = f'case {i}'
         time_and_operations('two approx', two_approx, w, costs, weights, sheet, i, 0)
         time_and_operations('dynamic programming', dynamic_programming, w, costs, weights, sheet, i, 1)
-        # time_and_operations('name', name, w, costs, weights, sheet, i, 2)
+        time_and_operations('branch and bound', branch_and_bound, w, costs, weights, sheet, i, 2)
         time_and_operations('PTAS', ptas, w, costs, weights, sheet, i, 3)
 
     exel.save('results.xlsx')
