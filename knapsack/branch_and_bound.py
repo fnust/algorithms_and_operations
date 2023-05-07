@@ -1,7 +1,7 @@
 def branch_and_bound(w: int, costs: list, weights: list): # -> [list, int, int, int]:
     items = []
     for i in range (len(costs)):
-        items.append(tuple([costs[i], weights[i]]))
+        items.append(tuple([weights[i], costs[i]]))
 
     items = sorted(items, key=lambda x: x[1]/x[0], reverse=True)
     len_items = len(items)
@@ -10,7 +10,6 @@ def branch_and_bound(w: int, costs: list, weights: list): # -> [list, int, int, 
 
     stack = [(0, 0, w, 0)]
     sum_weights = 0
-    # curr_items = set()
 
     while stack:
         i, curr_cost, curr_weight, bound = stack.pop()
@@ -32,4 +31,4 @@ def branch_and_bound(w: int, costs: list, weights: list): # -> [list, int, int, 
             stack.append(without_i)
         num_opns = num_opns + 1
 
-    return -1, max_cost, sum_weights, num_opns
+    return [], max_cost, sum_weights, num_opns
