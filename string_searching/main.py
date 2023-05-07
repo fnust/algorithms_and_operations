@@ -75,7 +75,7 @@ def knuth_morris_pratt(text: str, words: str) -> list:
 
 
 if __name__ == '__main__':
-    exel = openpyxl.load_workbook("results.xlsx")
+    exel = openpyxl.load_workbook('results.xlsx')
     sheet = exel.active
     sheet['B1'] = 'naive'
     sheet['C1'] = 'boyer_moore_horspool'
