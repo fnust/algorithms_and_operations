@@ -35,6 +35,7 @@ def profit_greed(W, cost, weights):
 
 
 def two_approx(W, cost, weights):
+    count_operations = len(cost) * (len(cost) - 1) // 2
     qual_greed_vec, qual_greed_ans = quality_greed(W, cost, weights)
     prof_greed_vec, prof_greed_ans = profit_greed(W, cost, weights)
     if qual_greed_ans > prof_greed_ans:
@@ -42,10 +43,10 @@ def two_approx(W, cost, weights):
         for i in range(len(cost)):
             if qual_greed_vec[i] == 1:
                 sum_weight += weights[i]
-        return qual_greed_vec, qual_greed_ans, sum_weight, 0
+        return qual_greed_vec, qual_greed_ans, sum_weight, count_operations
     else:
         sum_weight = 0
         for i in range(len(cost)):
             if prof_greed_vec[i] == 1:
                 sum_weight += weights[i]
-        return prof_greed_vec, prof_greed_ans, sum_weight, 0
+        return prof_greed_vec, prof_greed_ans, sum_weight, count_operations
