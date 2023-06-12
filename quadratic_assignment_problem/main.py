@@ -45,4 +45,5 @@ for file in files:
             print(min(total_val))
 
             with open(f'results/{alg.__name__}/{file}.sol', 'a+') as fout:
-                print(' '.join(list(map(str, total_res))), file=fout)
+                for r in total_res:
+                    print(*r, file=fout)
