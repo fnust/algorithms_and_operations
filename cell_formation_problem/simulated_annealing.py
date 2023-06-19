@@ -122,7 +122,7 @@ def cycle(n: int, mc: int, counter_t: int, counter_s: int, lib: int, dv: int, cu
 
         x = random()
         delta = new_res[0] - res[0]
-        if math.exp(delta / cur_t) > x:
+        if math.exp(delta / cur_t) > x and new_res[0] != 0:
             res = new_res.copy()
             counter_t = 0
         else:
@@ -132,9 +132,55 @@ def cycle(n: int, mc: int, counter_t: int, counter_s: int, lib: int, dv: int, cu
 
 
 def init_params(values_m: int):
-    n, mc, counter_t, counter_s = 0, 0, 0, 0
-    temp = 30 - min([values_m * 0.03, 10])
-    a = min([0.7 + (50 / values_m), 0.9])
+    counter_i, mc, counter_t, counter_s = 0, 0, 0, 0
+    temp = 12 - min([values_m * 0.01, 10])
+    a = min([0.7 + (50 / values_m), 0.8])
     lib = min([5 + math.ceil(8000 / values_m), 20])
 
-    return n, mc, counter_t, counter_s, temp, a, lib
+    return counter_i, mc, counter_t, counter_s, temp, a, lib
+
+
+def algorithm(machines_lst: list, m: int, p: int):
+    parts_lst = [[] for _ in range(p)]
+    count_clusters = 2
+    best_count_clusters = count_clusters
+
+    for i in range(m):
+        for part in machines_lst[i]:
+            parts_lst[part].append(i)
+
+    cur_res = get_init_res(machines_lst, parts_lst, m, p, count_clusters)
+    best_res_count_cell = cur_res.copy()
+    best_res_far = cur_res.copy()
+
+    d = 10
+    t_f = 1
+    check = 7
+
+    counter_i, mc, counter_t, counter_s, t, alpha, l = init_params(p * m)
+    print(t, alpha, l)
+
+    while True:
+        mc, counter_t, counter_s, \
+        cur_res, best_res_count_cell = cycle(counter_i, mc, counter_t, counter_s, l, d, t,
+                                             cur_res,
+                                             best_res_count_cell, machines_lst, parts_lst, m, p, count_clusters)
+        print('---', cur_res[0], count_clusters, '---')
+        # print(t, counter_s)
+        if t > t_f and counter_s <= check:
+            t = t * alpha
+            mc = 0
+            counter_i += 1
+            continue
+
+        if best_res_count_cell[0] > best_res_far[0]:
+            best_res_far = best_res_count_cell.copy()
+            best_count_clusters = count_clusters
+            count_clusters += 1
+
+            cur_res = get_init_res(machines_lst, parts_lst, m, p, count_clusters)
+            counter_i, mc, counter_t, counter_s, t, alpha, l = init_params(p * m)
+        else:
+            break
+
+    return best_res_far
